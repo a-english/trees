@@ -1,91 +1,97 @@
+public class BinarySearchTree<T extends Comparable<T>>
+{
+	 BinaryNode<T> root; // root of BST
 
-class BinaryNode<T extends Comparable<T>>{
-	T value;
-	BinaryNode<T> left, right;
+	 public int height() {
+		 return height(root);
+	 }
+	 int height(BinaryNode<T> leaf){
+		 if(leaf==null)
+			 return -1;
+		 return Math.max(height(leaf.left), height(leaf.right))+1;
+	 }
+	 public BinaryNode<T> getRoot()
+	 {
+		 return root;
+	 }
+	 
+	 /*******************
+	  * Insertion is Borked
+	  * needs to return the node that was just modified
+	  * so it can check for garbage
+	  * Or check all nodes in the tree for garbage?
+	  * I need a break
+	 ********************/
+	 
+	 public void add(T x)
+	 {
+		 root=insert(x, root);
+	 }
+	 
+	 private BinaryNode<T> insert(T x, BinaryNode<T> leaf)
+	 {
+		 if(leaf==null)
+			 return new BinaryNode<T>(x);
+		  int compareResult=x.compareTo(leaf.value);
+		  
+		  if(compareResult<0)
+			  leaf.left=insert(x, leaf.left);
+		  else if(compareResult>0)
+			  leaf.right=insert(x, leaf.right);
+		  
+		  return leaf;
+	 }
+	 
 	
-	BinaryNode(T value){
-		this.value=value;
-		left=null;
-		right=null;
-	}
-	
-	int height() {
-		int left, right;
-		if(this.left==null)
-			left=-1;
-		else
-			left=this.left.height();
-		if (this.right==null)
-			right=-1;
-		else
-			right=this.right.height();
-		
-		if(left>right)
-			return 1+left;
-		else return 1+right;
-	}
-	
-	
-	T getData() {
-		return value;
-	}
-	
-	BinaryNode<T> getLeft(){
-		return left;
-	}
-	
-	BinaryNode<T> getRight(){
-		return right;
-	}
-	
-	void insert(T query)
-	{
-		if(query.compareTo(value)<0) {		//less than
-			//System.out.print("Going left.\n");
-			if(left==null){
-				left=new BinaryNode<T>(query);
-				}
-			else{
-				left.insert(query);
-			}
-		}
-		else if(query.compareTo(value)>0) {		//greater than
-			//System.out.print("Going right.\n");
-			if(right==null) {
-				right=new BinaryNode<T>(query);
-			}
-			else {
-				right.insert(query);
-			}
-		}
-	}
-}
 
-public class BinarySearchTree<T extends Comparable<T>> {
-	BinaryNode<T> root;
-	
-	BinarySearchTree(){
-		root=null;
-	}
-	
-	void add(T value)
-	{
-		if(root==null)
-			root=new BinaryNode<T>(value);
-		else
-			root.insert(value);
-	}
-	
-	int height()
-	{
-		if (root==null)
-			return -1;
-		return root.height();
-		
-	}
-	
-	BinaryNode<T> getRoot(){
-		return root;
-	}
-	
+	 public T min()
+	 {
+		 return min(root).value;
+	 }
+	 private BinaryNode<T> min(BinaryNode<T> x)
+	 {
+		  if (x.left == null) 
+			  return x;
+		  return min(x.left);
+	 }
+	 public void deleteMin()
+	 {
+		 root = deleteMin(root);
+	 }
+	 private BinaryNode<T> deleteMin(BinaryNode<T> x)
+	 {
+		  if (x.left == null) 
+			  return x.right;
+		  x.left = deleteMin(x.left);
+		  //x.N = size(x.left) + size(x.right) + 1;
+		  return x;
+	 }
+	 
+	 BinaryNode<T> deleteRoot(){
+		 root = delete(root, root.value); 
+		 return root;
+	 }
+	 
+	 private BinaryNode<T> delete(BinaryNode<T> x, T value){
+		  if (x == null) 
+			  return null;
+		  int cmp = value.compareTo(x.value);
+		  if (cmp < 0)
+			  x.left = delete(x.left, value);
+		  else if (cmp > 0)
+			  x.right = delete(x.right, value);
+		  else
+		  {
+			  if (x.right == null) 
+				  return x.left;
+			  if (x.left == null) 
+				  return x.right;
+			  BinaryNode<T> t = x;
+			  x = min(t.right); // See page 407.
+			  x.right = deleteMin(t.right);
+			  x.left = t.left;
+		  }
+		  //x.N = size(x.left) + size(x.right) + 1;
+		  return x;
+	 }
 }

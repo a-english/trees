@@ -19,30 +19,42 @@ public class TreeDriver {
 		TreePrinter tp;
 		BinarySearchTree<Integer> bst=new BinarySearchTree<Integer>();
 		int temp;
-		while(bst.height()<5)
+		while(bst.height()!=5)
 		{
-			temp=random.nextInt(89)+10;
-			bst.add(temp);
-			//System.out.print("Adding "+temp+"\n");
-		//	pressAnyKeyToContinue();
+			//for(int i=0; i<20; i++) {
+				temp=random.nextInt(89)+10;
+				bst.add(temp);
+				tp=new TreePrinter(bst);
+				//tp.print("Binary Search Tree with height of "+bst.height());
+				//pressAnyKeyToContinue();
+			//}
 		}
 		//tree with height 5 now exists.
+		
 		tp=new TreePrinter(bst);
 		tp.print("Binary Search Tree with height of "+bst.height());
 		
-		
-
-		BinarySearchTree<Integer> avl=new AVL<Integer>();
-		while(avl.height()<5)
+		System.out.print("Now deleting root.\n");
+		while(bst.height()>0)
 		{
 			temp=random.nextInt(89)+10;
-			avl.add(temp);
-			//System.out.print("Adding "+temp+"\n");
-		//	pressAnyKeyToContinue();
+			bst.deleteRoot();
+			tp=new TreePrinter(bst);
+			tp.print("Binary Search Tree after deleting root ");
+			//pressAnyKeyToContinue();
 		}
-		//tree with height 5 now exists.
-		tp=new TreePrinter(avl);
-		tp.print("AVL Tree with height of "+avl.height());
+		
+		
+		BinarySearchTree<Integer> avl=new AVL<Integer>();
+		for(int i=0; i<35&&avl.height()<=5; i++)
+		{
+			temp=random.nextInt(89)+10;
+			System.out.print("Adding "+temp+"\n");
+			avl.add(temp);
+			tp=new TreePrinter(avl);
+			tp.print("AVL Tree with height of " +avl.height());
+			pressAnyKeyToContinue();
+		}
 		
 	}
 }

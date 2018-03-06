@@ -37,7 +37,7 @@ public class TreeDriver {
 		System.out.print("Now deleting root.\n");
 		while(bst.height()>0)
 		{
-			temp=random.nextInt(89)+10;
+			//temp=random.nextInt(89)+10;
 			bst.deleteRoot();
 			tp=new TreePrinter(bst);
 			tp.print("Binary Search Tree after deleting root ");
@@ -53,6 +53,12 @@ public class TreeDriver {
 			avl.add(temp);
 			tp=new TreePrinter(avl);
 			tp.print("AVL Tree with height of " +avl.height());
+			//pressAnyKeyToContinue();
+		}
+		
+		while(avl.height()>0) {
+			avl.deleteRoot();
+			tp.print("AVL Tree after deleting root ");
 			pressAnyKeyToContinue();
 		}
 		

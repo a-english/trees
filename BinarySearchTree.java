@@ -15,20 +15,13 @@ public class BinarySearchTree<T extends Comparable<T>>
 		 return root;
 	 }
 	 
-	 /*******************
-	  * Insertion is Borked
-	  * needs to return the node that was just modified
-	  * so it can check for garbage
-	  * Or check all nodes in the tree for garbage?
-	  * I need a break
-	 ********************/
 	 
 	 public void add(T x)
 	 {
 		 root=insert(x, root);
 	 }
 	 
-	 private BinaryNode<T> insert(T x, BinaryNode<T> leaf)
+	 public BinaryNode<T> insert(T x, BinaryNode<T> leaf)
 	 {
 		 if(leaf==null)
 			 return new BinaryNode<T>(x);
@@ -48,7 +41,7 @@ public class BinarySearchTree<T extends Comparable<T>>
 	 {
 		 return min(root).value;
 	 }
-	 private BinaryNode<T> min(BinaryNode<T> x)
+	 public BinaryNode<T> min(BinaryNode<T> x)
 	 {
 		  if (x.left == null) 
 			  return x;
@@ -58,12 +51,11 @@ public class BinarySearchTree<T extends Comparable<T>>
 	 {
 		 root = deleteMin(root);
 	 }
-	 private BinaryNode<T> deleteMin(BinaryNode<T> x)
+	 public BinaryNode<T> deleteMin(BinaryNode<T> x)
 	 {
 		  if (x.left == null) 
 			  return x.right;
 		  x.left = deleteMin(x.left);
-		  //x.N = size(x.left) + size(x.right) + 1;
 		  return x;
 	 }
 	 
@@ -72,7 +64,7 @@ public class BinarySearchTree<T extends Comparable<T>>
 		 return root;
 	 }
 	 
-	 private BinaryNode<T> delete(BinaryNode<T> x, T value){
+	 public BinaryNode<T> delete(BinaryNode<T> x, T value){
 		  if (x == null) 
 			  return null;
 		  int cmp = value.compareTo(x.value);
@@ -87,11 +79,10 @@ public class BinarySearchTree<T extends Comparable<T>>
 			  if (x.left == null) 
 				  return x.right;
 			  BinaryNode<T> t = x;
-			  x = min(t.right); // See page 407.
+			  x = min(t.right);
 			  x.right = deleteMin(t.right);
 			  x.left = t.left;
 		  }
-		  //x.N = size(x.left) + size(x.right) + 1;
 		  return x;
 	 }
 }
